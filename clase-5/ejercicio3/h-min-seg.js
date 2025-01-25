@@ -1,4 +1,38 @@
-function convertirASegundos(hs, min, seg) {
+function sumarNumero(numeros) {
+    let totalSuma = 0;
+
+    for (let i = 0; i < numeros.length; i++) {
+        totalSuma += Number(numeros[i].value);
+    }
+
+    return totalSuma;
+}
+
+document.querySelector('#calcular-tiempo-total').onclick = function() {
+    const $horas = document.querySelectorAll('.horas');
+    const $minutos = document.querySelectorAll('.minutos');
+    const $segundos = document.querySelectorAll('.segundos');
+
+    let totalHoras = sumarNumero($horas);
+    let totalMinutos = sumarNumero($minutos);
+    let totalSegundos = sumarNumero($segundos);
+
+    if (totalSegundos > 59) {
+        totalMinutos += Math.floor(totalSegundos /60);
+        totalSegundos = totalSegundos % 60;
+    }
+
+    if (totalMinutos > 59) {
+        totalHoras += Math.floor(totalMinutos / 60);
+        totalMinutos = totalMinutos % 60;
+    }
+    
+    document.querySelector('#resultado').textContent = `El tiempo total es de: ${totalHoras}:${totalMinutos}:${totalSegundos}`;
+
+    return false;
+}
+
+/*function convertirASegundos(hs, min, seg) {
     const HORAS = hs * 3600;
     const MINUTOS = min * 60;
     const SUMAR_SEGUNDOS = HORAS + MINUTOS + seg;
@@ -48,4 +82,4 @@ document.querySelector('#calcular-tiempo-total').onclick = function() {
     document.querySelector('#resultado').textContent = `El tiempo total de los videos es de ${tiempoTotal}`;
 
     return false;
-}
+}*/

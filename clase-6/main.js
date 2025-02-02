@@ -1,7 +1,7 @@
 document.querySelector('#agregar-familiares').onclick = function() {
     const $familiares = Number(document.querySelector('#grupo-familiar').value); 
     
-    agregarFamiliares($familiares);
+    crearGrupoFamiliar($familiares);
 
     return false;
 }
@@ -12,28 +12,53 @@ document.querySelector('#calcular').onclick = function() {
     const edadMenor = obtenerEdadMenor(edades);
     const edadPromedio = obtenerEdadPromedio(edades);
 
-    document.querySelector('#mayor').textContent = `El mayor del grupo familiar tiene ${edadMayor} años`;
-    document.querySelector('#menor').textContent = `El menor del grupo familiar tiene ${edadMenor} años`;
-    document.querySelector('#promedio').textContent = `El promedio de edad es: ${edadPromedio} `;
+    const $resultado = document.querySelector('#resultado');
+
+    const $mayorEdad = document.createElement('p');
+    const $menorEdad = document.createElement('p');
+    const $promedioEdad = document.createElement('p');
+
+    $mayorEdad.textContent = `El mayor de la familia tiene ${edadMayor} años`;
+    $menorEdad.textContent = `El menor de la familia tiene ${edadMenor} años`;
+    $promedioEdad.textContent = `El promedio de edad es de: ${edadPromedio}`;
+
+    $resultado.appendChild($mayorEdad);
+    $resultado.appendChild($menorEdad);
+    $resultado.appendChild($promedioEdad);
+
+    mostrarResultado();
+    mostrarBorrarIntegrantes();
 
     return false;
 }
 
-function agregarFamiliares(cantFamiliares) {
-    for (let i = 0; i < cantFamiliares; i++) {
-        crearIntegrantes(i);
-    }
-
+document.querySelector('#resetear').onclick = function() {
+    borrarGrupoFamiliar();
+    ocultarBotonCalcular();
+    ocultarResultado();
+    ocultarBorrarIntegrantes();
+    return false;
 }
 
-function crearIntegrantes(cantidad) {
+function crearGrupoFamiliar(cantIntegrante) {
+    if (cantIntegrante > 0){
+        mostrarBotonCalcular();
+    }
+
+
+   for (let i = 0; i < cantIntegrante; i++) {
+        crearIntegrante(i);
+   } 
+}
+
+function crearIntegrante(cantidad) {
     const $grupoFamiliar = document.querySelector('#familia');
     const $div = document.createElement('div');
     const $label = document.createElement('label');
     const $input = document.createElement('input');
 
     $div.className = 'integrante';
-    $label.textContent = 'Integrante N°' + (cantidad + 1);
+    $label.textContent = `Integrante N°${(cantidad + 1)} - `;
     $input.type = 'number';
     $input.placeholder = 'Ingresa tu edad';
 
@@ -54,36 +79,34 @@ function obtenerEdades() {
     return edades;
 }
 
-function obtenerEdadMayor(edades) {
-    let mayorEdad = edades[0];
+function borrarGrupoFamiliar() {
+    const $integrante = document.querySelectorAll('.integrante');
 
-    for (let i = 0; i < edades.length; i++) {
-        if (edades[i] > mayorEdad) {
-            mayorEdad = edades[i];
-        }
+    for (let i = 0; i < $integrante.length; i++) {
+        $integrante[i].remove();
     }
-
-    return mayorEdad;
 }
 
-function obtenerEdadMenor(edades) {
-    let menorEdad = edades[0];
-
-    for (let i = 0; i < edades.length; i++) {
-        if (edades[i] < menorEdad) {
-            menorEdad = edades[i];
-        }
-    }
-
-    return menorEdad;
+function mostrarBotonCalcular() {
+    document.querySelector('#calcular').hidden = false;
 }
 
-function obtenerEdadPromedio(edades) {
-    let totalEdad = 0;
+function ocultarBotonCalcular() {
+    document.querySelector('#calcular').hidden = true;
+}
 
-    for (let i = 0; i < edades.length; i++) {
-        edadesSumadas += edades[i]; 
-    }
+function mostrarResultado() {
+    document.querySelector('#resultado').hidden = false;
+}
 
-    return totalEdad / edades.length;
+function ocultarResultado() {
+    document.querySelector('#resultado').hidden = true;
+}
+
+function mostrarBorrarIntegrantes() {
+    document.querySelector('#resetear').hidden = false;
+}
+
+function ocultarBorrarIntegrantes() {
+    document.querySelector('#resetear').hidden = true;
 }

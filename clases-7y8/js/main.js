@@ -15,10 +15,10 @@ const comportamiento = document.formulario.comportamiento.value;
 //const descripcionRegalo = $form['descripcion-regalo'].value;
 const descripcionRegalo = document.formulario['descripcion-regalo'].value;
 
-console.log(nombre);
-console.log(ciudad);
-console.log(comportamiento);
-console.log(descripcionRegalo);
+//console.log(nombre);
+//console.log(ciudad);
+//console.log(comportamiento);
+//console.log(descripcionRegalo);
 
 function validarNombre(nombre) {
     if (nombre.length === 0) {
@@ -29,4 +29,23 @@ function validarNombre(nombre) {
     }
 
     return "";
+}
+
+function validarCiudad(ciudad) {
+    if(ciudad === '') {
+        return 'Este campo no debe quedar vacío';
+    }
+
+    return '';
+}
+
+function validarDescripcionRegalo(descripcion) {
+    if (descripcion === '') {
+        return 'Este campo no debe quedar vacío';
+    }
+    if(descripcion.length >= 100) {
+        return 'Este campo debe tener menos de 100 caracteres';
+    }
+    
+    return '';
 }

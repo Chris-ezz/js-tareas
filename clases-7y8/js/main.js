@@ -90,7 +90,6 @@ function manejarErrores(errores) {
             mostrarErrores(error);
         } else {
             $form[key].className = "";
-            //document.querySelector('#errores').className = "oculto"; no es así
         }
     });
     
@@ -108,6 +107,9 @@ function mostrarErrores(error) {
     $errores.appendChild($error);
 }
 
+
 function borrarErroresAnteriores() {
-    document.querySelector('#errores').textContent = "";
+    const $errores = document.querySelectorAll('#errores li');
+
+    $errores.forEach(error => error.remove());
 }
